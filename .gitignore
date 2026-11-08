@@ -1,0 +1,54 @@
+.env
+.env.*
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pytest cache
+.pytest_cache/
+
+# Local caches, coverage output, logs, and temporary files
+.cache/
+cache/
+tmp/
+temp/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
+*~
+
+# Local secrets and credential files
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Screenshots and browser captures
+**/screenshots/
+**/screenshot*.png
+**/*_screenshot.*
+
+# Local verification/capture helpers, not project source or the test suite
+capture_screenshots.py
+verify_live_server.py
+test_edge_headless.py
+
+# Submission archives
+Diabetes_Capstone_Submission.zip
+*Submission*.zip
+*submission*.zip

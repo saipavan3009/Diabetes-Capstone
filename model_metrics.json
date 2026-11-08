@@ -1,0 +1,105 @@
+{
+    "project_title": "Diabetes Disease Prediction for the Age Group Between 20 to 60 Using Machine Learning Flask Web Application",
+    "selected_model": "Support Vector Machine (SVM)",
+    "feature_names": [
+        "Glucose",
+        "BMI",
+        "BloodPressure",
+        "Insulin",
+        "Age"
+    ],
+    "dataset": {
+        "dataset_file": "diabetes.csv",
+        "total_original_records": 768,
+        "age_filter": "20 to 60 inclusive",
+        "filtered_records": 741,
+        "excluded_records": 27,
+        "age_20_records_found": 0,
+        "observed_min_age": 21,
+        "observed_max_age": 81,
+        "age_documentation": "Inspection of diabetes.csv confirms min age is 21; exactly 0 records exist with Age == 20.",
+        "training_records": 592,
+        "testing_records": 149,
+        "zero_value_analysis": {
+            "Glucose": {
+                "zero_count": 5,
+                "percentage": 0.67
+            },
+            "BMI": {
+                "zero_count": 10,
+                "percentage": 1.35
+            },
+            "BloodPressure": {
+                "zero_count": 34,
+                "percentage": 4.59
+            },
+            "Insulin": {
+                "zero_count": 350,
+                "percentage": 47.23
+            }
+        }
+    },
+    "cross_validation": {
+        "k_folds": 5,
+        "strategy": "StratifiedKFold",
+        "selection_metric": "F1-Score",
+        "random_state": 42,
+        "results": {
+            "Logistic Regression": {
+                "mean_f1": 0.6414,
+                "std_f1": 0.0713,
+                "mean_accuracy": 0.7685,
+                "std_accuracy": 0.0362,
+                "fold_f1_scores": [
+                    0.6747,
+                    0.7013,
+                    0.6923,
+                    0.507,
+                    0.6316
+                ]
+            },
+            "Support Vector Machine (SVM)": {
+                "mean_f1": 0.6446,
+                "std_f1": 0.0719,
+                "mean_accuracy": 0.7702,
+                "std_accuracy": 0.0361,
+                "fold_f1_scores": [
+                    0.6824,
+                    0.7013,
+                    0.6923,
+                    0.507,
+                    0.64
+                ]
+            },
+            "Random Forest": {
+                "mean_f1": 0.6422,
+                "std_f1": 0.0757,
+                "mean_accuracy": 0.755,
+                "std_accuracy": 0.0433,
+                "fold_f1_scores": [
+                    0.7126,
+                    0.6494,
+                    0.7356,
+                    0.5679,
+                    0.5455
+                ]
+            }
+        }
+    },
+    "test_metrics": {
+        "accuracy": 0.7785,
+        "precision": 0.7436,
+        "recall": 0.5577,
+        "f1_score": 0.6374,
+        "accuracy_percent": 77.85,
+        "precision_percent": 74.36,
+        "recall_percent": 55.77,
+        "f1_score_percent": 63.74,
+        "confusion_matrix": {
+            "true_negatives": 87,
+            "false_positives": 10,
+            "false_negatives": 23,
+            "true_positives": 29
+        }
+    }
+}

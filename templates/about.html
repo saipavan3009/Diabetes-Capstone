@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="about-page" aria-labelledby="about-title">
+    <header class="page-intro about-header">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> Project notes & model transparency</p>
+        <h1 class="about-title" id="about-title">About this assessment</h1>
+        <p class="about-subtitle">A concise guide to the health readings, machine learning workflow, measured performance, and limits of this academic project.</p>
+    </header>
+
+    <div class="about-layout">
+        <aside class="about-aside">
+            <div class="aside-mark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M7 24h9l4-11 8 23 5-12h8"/><circle cx="24" cy="24" r="20"/></svg></div>
+            <p class="aside-kicker">A transparent prototype</p>
+            <h2>Small set of signals. Clear boundaries.</h2>
+            <p>This project demonstrates how a saved classification pipeline can turn a few structured readings into a preliminary risk pattern.</p>
+            <a href="{{ url_for('diabetes') }}" class="aside-link">Open the assessment <span aria-hidden="true">→</span></a>
+        </aside>
+
+        <div class="accordion-wrapper">
+            <details class="clean-accordion">
+                <summary class="accordion-summary"><span class="section-number">A</span><span class="summary-copy"><strong>A. How Does This System Work?</strong><small>From age-filtered records to a model result</small></span><span class="summary-toggle" aria-hidden="true"></span></summary>
+                <div class="accordion-content">
+                    <div class="workflow-steps">
+                        <article><span>01</span><div><h3>Build the cohort</h3><p>The provided diabetes dataset is filtered to adults aged 20 to 60 inclusive. The saved evaluation records 741 rows in this cohort.</p></div></article>
+                        <article><span>02</span><div><h3>Prepare five features</h3><p>The pipeline uses Glucose, BMI, BloodPressure, Insulin, and Age. Recorded zero values for clinical measures are treated as missing and imputed within the fitted pipeline.</p></div></article>
+                        <article><span>03</span><div><h3>Evaluate and select</h3><p>Logistic Regression, Support Vector Machine, and Random Forest were compared using five-fold stratified cross-validation. The selected model is shown in the project metrics.</p></div></article>
+                        <article><span>04</span><div><h3>Return a pattern</h3><p>The saved model evaluates the five submitted values and returns a lower or higher predicted risk pattern. This output is educational and not diagnostic.</p></div></article>
+                    </div>
+                </div>
+            </details>
+
+            <details class="clean-accordion">
+                <summary class="accordion-summary"><span class="section-number">B</span><span class="summary-copy"><strong>B. What Do These Five Parameters Mean?</strong><small>Input definitions and units</small></span><span class="summary-toggle" aria-hidden="true"></span></summary>
+                <div class="accordion-content">
+                    <ul class="parameter-list">
+                        <li><strong>Glucose <span>mg/dL</span></strong><p>Blood glucose concentration as recorded for the reading.</p></li>
+                        <li><strong>BMI <span>kg/m²</span></strong><p>Body mass index, a ratio based on weight and height.</p></li>
+                        <li><strong>Blood Pressure <span>mmHg</span></strong><p>Blood pressure value recorded in the source dataset.</p></li>
+                        <li><strong>Insulin <span>µU/mL</span></strong><p>Insulin measurement. Enter 0 if it was not measured; the model pipeline handles missing values.</p></li>
+                        <li><strong>Age <span>years</span></strong><p>Age must be from 20 through 60, inclusive, for this project.</p></li>
+                    </ul>
+                </div>
+            </details>
+
+            <details class="clean-accordion">
+                <summary class="accordion-summary"><span class="section-number">C</span><span class="summary-copy"><strong>C. Model Performance</strong><small>Independent holdout metrics from model_metrics.json</small></span><span class="summary-toggle" aria-hidden="true"></span></summary>
+                <div class="accordion-content">
+                    <p class="metrics-intro">The following values come directly from the saved evaluation on the independent test split. No performance values are estimated in this page.</p>
+                    <div class="metrics-pill-grid">
+                        <div class="metric-pill metric-model"><span class="metric-pill-label">Selected model</span><strong class="metric-pill-val metric-pill-val-sm">{% if metrics.get('selected_model') %}{{ metrics.selected_model }}{% else %}Not available{% endif %}</strong></div>
+                        <div class="metric-pill"><span class="metric-pill-label">Accuracy</span><strong class="metric-pill-val">{% if metrics.get('test_metrics') %}{{ metrics.test_metrics.accuracy_percent }}%{% else %}—{% endif %}</strong></div>
+                        <div class="metric-pill"><span class="metric-pill-label">Precision</span><strong class="metric-pill-val">{% if metrics.get('test_metrics') %}{{ metrics.test_metrics.precision_percent }}%{% else %}—{% endif %}</strong></div>
+                        <div class="metric-pill"><span class="metric-pill-label">Recall</span><strong class="metric-pill-val">{% if metrics.get('test_metrics') %}{{ metrics.test_metrics.recall_percent }}%{% else %}—{% endif %}</strong></div>
+                        <div class="metric-pill"><span class="metric-pill-label">F1-score</span><strong class="metric-pill-val">{% if metrics.get('test_metrics') %}{{ metrics.test_metrics.f1_score_percent }}%{% else %}—{% endif %}</strong></div>
+                    </div>
+                    <p class="metrics-split-note"><strong>Evaluation split</strong><span>{{ metrics.dataset.training_records }} training records</span><span>{{ metrics.dataset.testing_records }} test records</span><span>{{ metrics.dataset.filtered_records }} filtered records</span></p>
+                    <p class="metrics-footnote">These results describe performance on this dataset split only. They do not establish clinical accuracy or suitability for individual care.</p>
+                </div>
+            </details>
+
+            <details class="clean-accordion">
+                <summary class="accordion-summary"><span class="section-number">D</span><span class="summary-copy"><strong>D. About This Project</strong><small>Academic scope, tools, and limitations</small></span><span class="summary-toggle" aria-hidden="true"></span></summary>
+                <div class="accordion-content">
+                    <h3>Project objective</h3>
+                    <p>This capstone demonstrates a Flask interface for a machine learning classifier that uses five selected health features to show a preliminary binary risk pattern for adults aged 20–60.</p>
+                    <h3>Technology</h3>
+                    <p>Python, Flask, Scikit-learn, Pandas, NumPy, HTML, CSS, and Joblib.</p>
+                    <h3>Limitations</h3>
+                    <ul><li>The model is intended for the stated age range and the dataset used for this project.</li><li>The source dataset has no records at exactly age 20; its youngest observed record is age 21.</li><li>The output is a binary model classification, not a diagnosis, probability, or complete clinical assessment.</li><li>Results depend on data quality and may not generalize to other populations or settings.</li></ul>
+                </div>
+            </details>
+
+            <details class="clean-accordion">
+                <summary class="accordion-summary"><span class="section-number">E</span><span class="summary-copy"><strong>E. Medical Disclaimer</strong><small>How to interpret a result</small></span><span class="summary-toggle" aria-hidden="true"></span></summary>
+                <div class="accordion-content disclaimer-content">
+                    <p><strong>Educational &amp; non-diagnostic notice:</strong> This application was developed for academic and educational purposes. Its output is a preliminary statistical pattern and must not be considered a medical diagnosis, clinical evaluation, or formal health assessment. Consult a licensed healthcare professional for medical advice, laboratory testing, and treatment decisions.</p>
+                </div>
+            </details>
+        </div>
+    </div>
+    <div class="about-action-wrap"><a href="{{ url_for('diabetes') }}" class="btn-hero"><span>Check Your Risk</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+</section>
+{% endblock %}
